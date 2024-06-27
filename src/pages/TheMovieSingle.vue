@@ -1,0 +1,1 @@
+<template>Single movie</template>
