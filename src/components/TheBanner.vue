@@ -1,23 +1,63 @@
 <script setup>
 import BaseSlider from './BaseSlider.vue'
+import { useMoviesStore } from '@/stores/movies'
+import { ref, onMounted, watchEffect, computed } from 'vue'
+import { ROUTER_PATH } from '@/utils/router'
+import { useRouter } from 'vue-router'
+import { MOVIES_CATEGORIES } from '@/utils/constants'
+
+const moviesStore = useMoviesStore()
+const movies = computed(() => moviesStore.movies)
+const activeMovie = ref(null)
+
+const router = useRouter()
+
+onMounted(() => {
+  watchEffect(() => {
+    if (movies.value && movies.value.length > 0) {
+      activeMovie.value = movies.value[0]
+    } else {
+      console.log('No movies available yet.')
+    }
+  })
+})
+function goToMoviePage(id) {
+  router.push({ name: ROUTER_PATH.MOVIE_SINGLE.name, params: { id } })
+}
+
+function changePoster(item) {
+  activeMovie.value = item
+}
 </script>
 
 <template>
-  <div @wheel="handleWheel" :class="$style.banner">
+  <div
+    :style="{
+      backgroundImage: `url(https://image.tmdb.org/t/p/w780/${activeMovie?.backdrop_path})`
+    }"
+    @wheel="handleWheel"
+    :class="$style.banner"
+  >
     <div :class="$style.content">
-      <h2 :class="$style.title">Puss in Bots: The Last Wish</h2>
-      <div :class="$style.statistic"><time>2022</time><span>8.5</span></div>
+      <h2 :class="$style.title">{{ activeMovie?.title }}</h2>
+      <div :class="$style.statistic">
+        <time>{{ activeMovie?.release_date }}</time
+        ><span>{{ activeMovie?.vote_average }}</span>
+      </div>
       <ul :class="$style.genres">
-        <li>Animation, Adventure, Comedy</li>
+        <li v-for="genre in activeMovie?.genres" :key="genre">{{ genre }}</li>
       </ul>
       <p :class="$style.description">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis neque adipisci nisi
-        explicabo ducimus quam minima rem, harum sint est!
+        {{ activeMovie?.overview }}
       </p>
-      <button :class="$style.watch">Watch now</button>
+      <button @click="goToMoviePage(activeMovie?.id)" :class="$style.watch">Watch now</button>
     </div>
     <div :class="$style.wrapperSlider">
-      <BaseSlider :array="[1, 2, 3, 4, 5, 6, 7, 8]" />
+      <BaseSlider
+        :sort-by="MOVIES_CATEGORIES.POPULAR"
+        @change-poster="changePoster"
+        :movies="movies"
+      />
     </div>
   </div>
 </template>
@@ -25,8 +65,7 @@ import BaseSlider from './BaseSlider.vue'
 <style module>
 .banner {
   position: relative;
-  background-image: url('https://static.zeffirellis.com/media/movies/_1200x630_crop_center-center_82_none/02-pib-dm-mobile-banner-1080x745-km-f01-061422-62a9f2d372f3a-1.jpg?mtime=1675090914');
-  height: 500px;
+  height: 600px;
   background-size: cover;
   border-radius: 30px;
   overflow: hidden;
@@ -94,5 +133,6 @@ import BaseSlider from './BaseSlider.vue'
   overflow: hidden;
   flex: 1;
   padding-bottom: 20px;
+  padding-inline: 10px;
 }
 </style>

@@ -5,6 +5,7 @@ import { ref } from 'vue'
 defineProps({
   item: Number
 })
+
 const itemRef = ref(null)
 defineExpose({
   itemRef
