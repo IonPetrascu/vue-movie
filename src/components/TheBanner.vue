@@ -1,26 +1,34 @@
 <script setup>
 import BaseSlider from './BaseSlider.vue'
 import { useMoviesStore } from '@/stores/movies'
-import { ref, onMounted, watchEffect, computed } from 'vue'
+import { ref, watchEffect, computed } from 'vue'
 import { ROUTER_PATH } from '@/utils/router'
 import { useRouter } from 'vue-router'
 import { MOVIES_CATEGORIES } from '@/utils/constants'
+import { getNamesOfGenres } from '@/utils/functions'
 
 const moviesStore = useMoviesStore()
 const movies = computed(() => moviesStore.movies)
 const activeMovie = ref(null)
 
+const genres = computed(() => {
+  if (activeMovie.value && activeMovie.value.genre_ids) {
+    return getNamesOfGenres(activeMovie.value.genre_ids, moviesStore.genres)
+  } else {
+    return []
+  }
+})
+
 const router = useRouter()
 
-onMounted(() => {
-  watchEffect(() => {
-    if (movies.value && movies.value.length > 0) {
-      activeMovie.value = movies.value[0]
-    } else {
-      console.log('No movies available yet.')
-    }
-  })
+watchEffect(() => {
+  if (movies.value && movies.value.length > 0) {
+    activeMovie.value = movies.value[0]
+  } else {
+    console.log('No movies available yet.')
+  }
 })
+
 function goToMoviePage(id) {
   router.push({ name: ROUTER_PATH.MOVIE_SINGLE.name, params: { id } })
 }
@@ -45,7 +53,7 @@ function changePoster(item) {
         ><span>{{ activeMovie?.vote_average }}</span>
       </div>
       <ul :class="$style.genres">
-        <li v-for="genre in activeMovie?.genres" :key="genre">{{ genre }}</li>
+        <li v-for="genre in genres" :key="genre">{{ genre.name }}</li>
       </ul>
       <p :class="$style.description">
         {{ activeMovie?.overview }}
@@ -134,5 +142,9 @@ function changePoster(item) {
   flex: 1;
   padding-bottom: 20px;
   padding-inline: 10px;
+}
+.genres {
+  display: flex;
+  gap: 10px;
 }
 </style>

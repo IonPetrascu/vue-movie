@@ -1,12 +1,12 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { GAP_SLIDER } from '@/utils/constants'
+import { ref, onMounted, computed } from 'vue'
+import { GAP_SLIDER, MOVIES_CATEGORIES } from '@/utils/constants'
 import { onWheel } from '../utils/functions'
 import BaseCardItem from './BaseCardItem.vue'
 import { useMoviesStore } from '@/stores/movies'
 import { isSortByValid } from '@/utils/validators'
 
-const props = defineProps({
+defineProps({
   sortBy: {
     required: true,
     type: String,
@@ -15,17 +15,12 @@ const props = defineProps({
 })
 const card = ref(null)
 const slider = ref(null)
-const movies = ref([])
-const moviesStore = useMoviesStore()
 
-onMounted(async () => {
-  try {
-    await moviesStore.getMovies(props.sortBy)
-    movies.value = moviesStore.movies
-  } catch (error) {
-    console.error('Failed to fetch movies:', error)
-  }
-})
+const moviesStore = useMoviesStore()
+const movies = computed(() => moviesStore.movies)
+
+onMounted(() => moviesStore.getMovies(MOVIES_CATEGORIES.POPULAR))
+
 const emit = defineEmits(['changePoster'])
 
 const handleWheel = (e) => {

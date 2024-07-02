@@ -24,3 +24,18 @@ export const onWheel = (e, slider, card) => {
     slider.value.style.left = `${currentLeft + movement}px`
   }
 }
+
+export function getNamesOfGenres(genreIds, genresList) {
+  if (!isArray(genresList)) {
+    return [];
+  }
+
+  return genreIds.map((id) => {
+    const genre = genresList.find((genreObj) => genreObj.id === id)
+    return genre ? genre : ""
+  })
+}
+
+function isArray(value) {
+  return Array.isArray(value)
+}
