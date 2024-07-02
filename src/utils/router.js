@@ -27,6 +27,10 @@ export const ROUTER_PATH = {
     path: "/people/:id",
     name: "people_single"
   },
+  GENRES: {
+    path: "/genres/:id",
+    name: "genres_single"
+  }
 };
 
 

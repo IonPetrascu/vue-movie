@@ -1,11 +1,10 @@
 <script setup>
 import BaseSlider from './BaseSlider.vue'
 import { useMoviesStore } from '@/stores/movies'
-import { ref, watchEffect, computed } from 'vue'
-import { ROUTER_PATH } from '@/utils/router'
-import { useRouter } from 'vue-router'
-import { MOVIES_CATEGORIES } from '@/utils/constants'
+import { ref, watchEffect, computed, inject } from 'vue'
 import { getNamesOfGenres } from '@/utils/functions'
+import { ROUTER_PATH } from '@/utils/router'
+import { MOVIES_CATEGORIES } from '@/utils/constants'
 
 const moviesStore = useMoviesStore()
 const movies = computed(() => moviesStore.movies)
@@ -19,8 +18,6 @@ const genres = computed(() => {
   }
 })
 
-const router = useRouter()
-
 watchEffect(() => {
   if (movies.value && movies.value.length > 0) {
     activeMovie.value = movies.value[0]
@@ -29,13 +26,11 @@ watchEffect(() => {
   }
 })
 
-function goToMoviePage(id) {
-  router.push({ name: ROUTER_PATH.MOVIE_SINGLE.name, params: { id } })
-}
-
 function changePoster(item) {
   activeMovie.value = item
 }
+
+const goToPage = inject('goToPage')
 </script>
 
 <template>
@@ -53,12 +48,23 @@ function changePoster(item) {
         ><span>{{ activeMovie?.vote_average }}</span>
       </div>
       <ul :class="$style.genres">
-        <li v-for="genre in genres" :key="genre">{{ genre.name }}</li>
+        <li
+          v-for="genre in genres"
+          @click="() => goToPage(ROUTER_PATH.GENRES.name, genre.id)"
+          :key="genre"
+        >
+          {{ genre.name }}
+        </li>
       </ul>
       <p :class="$style.description">
         {{ activeMovie?.overview }}
       </p>
-      <button @click="goToMoviePage(activeMovie?.id)" :class="$style.watch">Watch now</button>
+      <button
+        @click="() => goToPage(ROUTER_PATH.MOVIE_SINGLE.name, activeMovie.id)"
+        :class="$style.watch"
+      >
+        Watch now
+      </button>
     </div>
     <div :class="$style.wrapperSlider">
       <BaseSlider

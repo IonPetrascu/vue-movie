@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from 'vue'
+import { ROUTER_PATH } from '@/utils/router'
+import { ref, inject } from 'vue'
 const isFocused = ref(false)
 
 defineProps({
@@ -9,9 +10,15 @@ defineProps({
     //validator:
   }
 })
+const goToPage = inject('goToPage')
 </script>
 <template>
-  <div @mouseover="isFocused = true" @mouseleave="isFocused = false" :class="$style.body">
+  <div
+    @click="() => goToPage(ROUTER_PATH.MOVIE_SINGLE.name, item.id)"
+    @mouseover="isFocused = true"
+    @mouseleave="isFocused = false"
+    :class="$style.body"
+  >
     <img
       :class="$style.img"
       :src="`https://image.tmdb.org/t/p/w500${item.backdrop_path}`"

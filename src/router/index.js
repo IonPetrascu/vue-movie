@@ -49,6 +49,11 @@ const router = createRouter({
       path: ROUTER_PATH.PEOPLE_SINGLE.path,
       name: ROUTER_PATH.PEOPLE_SINGLE.name,
       component: ThePeopleSingle
+    },
+    {
+      path: ROUTER_PATH.GENRES.path,
+      name: ROUTER_PATH.GENRES.name,
+      component: TheMovies
     }
   ]
 })

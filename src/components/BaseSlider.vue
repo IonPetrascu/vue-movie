@@ -31,7 +31,7 @@ const handleWheel = (e) => {
 <template>
   <div @wheel="handleWheel" ref="slider" :class="$style.slider">
     <div
-      @click="emit('changePoster', item)"
+      @mouseover="emit('changePoster', item)"
       :style="{
         marginLeft: idx !== 0 ? `${GAP_SLIDER}px` : '0'
       }"
