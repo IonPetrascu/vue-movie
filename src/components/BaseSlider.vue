@@ -19,7 +19,7 @@ const slider = ref(null)
 const moviesStore = useMoviesStore()
 const movies = computed(() => moviesStore.movies)
 
-onMounted(() => moviesStore.getMovies(MOVIES_TYPES.POPULAR))
+onMounted(() => moviesStore.getMovies(MOVIES_TYPES.POPULAR, 1))
 
 const emit = defineEmits(['changePoster'])
 
@@ -57,9 +57,11 @@ const handleWheel = (e) => {
 }
 .slideItem {
   border-radius: 10px;
-  overflow: hidden;
   transition: all 0.2s ease;
   min-width: calc((100% - 72px) / 4);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .slideItem:hover {
   scale: 1.1;

@@ -4,16 +4,16 @@ import { API_BASE_URL, API_BEARER_KEY } from '@/utils/constants'
 import { ref } from 'vue'
 
 export const useMoviesStore = defineStore('movies', () => {
-  const currentPage = ref(1)
+
   const movies = ref([])
   const movieDetails = ref({})
   const genres = ref([])
 
-  async function getMovies(type) {
+  async function getMovies(type, page) {
     const url = new URL(`${API_BASE_URL}movie/${type}`);
 
     url.search = new URLSearchParams({
-      page: currentPage.value
+      page
     }).toString();
 
     const options = {
@@ -26,7 +26,7 @@ export const useMoviesStore = defineStore('movies', () => {
 
     const response = await fetch(url, options);
     const data = await response.json();
-    movies.value = data.results;
+    movies.value = [...movies.value, ...data.results];
   }
 
   async function getMovieLists(id) {

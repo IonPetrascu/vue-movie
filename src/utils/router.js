@@ -8,7 +8,7 @@ export const ROUTER_PATH = {
     name: "movie_single"
   },
   MOVIES: {
-    path: "/movies",
+    path: "/movies/:type",
     name: "movies"
   },
   TV: {
@@ -36,13 +36,15 @@ export const ROUTER_PATH = {
 
 export const ROUTES_SUBPAGES = {
   movies: [
-    { path: "/movies/now-playing", name: "movies_now_playing" },
-    { path: "/movies/popular", name: "movies_popular" },
-    { path: "/movies/top-rated", name: "movies_top_rated" },
-    { path: "/movies/up-coming", name: "movies_up_coming" },
+    { type: "popular", name: "Popular" },
+    { type: "now_playing", name: "Now Playing" },
+    { type: "upcoming", name: "Upcoming " },
+    { type: "top_rated", name: "Top Rated" },
   ],
-  tv_page: [
-    { path: "/tv-page-subpage1/:id", name: "TV Page Subpage 1" },
-    { path: "/tv-page-subpage2/:id", name: "TV Page Subpage 2" }
+  tv: [
+    { type: 'popular', name: "Popular" },
+    { type: 'airing_today', name: "Airing Today" },
+    { type: 'on_tv', name: "On TV" },
+    { type: 'top_rated', name: "Top Rated" }
   ]
 };
