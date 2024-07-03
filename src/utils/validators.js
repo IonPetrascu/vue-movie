@@ -1,5 +1,5 @@
 import icons from './icons'
-import { MOVIES_CATEGORIES } from './constants'
+import { MOVIES_TYPES } from './constants'
 
 function isNumber(value) {
   return typeof value === 'number'
@@ -21,5 +21,5 @@ export function isListNavValid(value) {
 }
 
 export function isSortByValid(value) {
-  return Object.values(MOVIES_CATEGORIES).includes(value)
+  return Object.values(MOVIES_TYPES).includes(value)
 }

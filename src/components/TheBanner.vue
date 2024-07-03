@@ -4,7 +4,7 @@ import { useMoviesStore } from '@/stores/movies'
 import { ref, watchEffect, computed, inject } from 'vue'
 import { getNamesOfGenres } from '@/utils/functions'
 import { ROUTER_PATH } from '@/utils/router'
-import { MOVIES_CATEGORIES } from '@/utils/constants'
+import { MOVIES_TYPES } from '@/utils/constants'
 
 const moviesStore = useMoviesStore()
 const movies = computed(() => moviesStore.movies)
@@ -67,11 +67,7 @@ const goToPage = inject('goToPage')
       </button>
     </div>
     <div :class="$style.wrapperSlider">
-      <BaseSlider
-        :sort-by="MOVIES_CATEGORIES.POPULAR"
-        @change-poster="changePoster"
-        :movies="movies"
-      />
+      <BaseSlider :sort-by="MOVIES_TYPES.POPULAR" @change-poster="changePoster" :movies="movies" />
     </div>
   </div>
 </template>

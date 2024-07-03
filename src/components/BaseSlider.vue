@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { GAP_SLIDER, MOVIES_CATEGORIES } from '@/utils/constants'
+import { GAP_SLIDER, MOVIES_TYPES } from '@/utils/constants'
 import { onWheel } from '../utils/functions'
 import BaseCardItem from './BaseCardItem.vue'
 import { useMoviesStore } from '@/stores/movies'
@@ -19,7 +19,7 @@ const slider = ref(null)
 const moviesStore = useMoviesStore()
 const movies = computed(() => moviesStore.movies)
 
-onMounted(() => moviesStore.getMovies(MOVIES_CATEGORIES.POPULAR))
+onMounted(() => moviesStore.getMovies(MOVIES_TYPES.POPULAR))
 
 const emit = defineEmits(['changePoster'])
 

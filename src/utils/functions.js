@@ -2,7 +2,7 @@ import { ROUTER_PATH } from './router'
 import { GAP_SLIDER } from './constants'
 
 export function getNavList() {
-  return Object.values(ROUTER_PATH).filter(({ name }) => name !== 'movie_single' && name !== 'tv_single' && name !== 'people_single')
+  return Object.values(ROUTER_PATH).filter(({ name }) => name !== 'movie_single' && name !== 'tv_single' && name !== 'people_single' && name !== 'genres_single')
 }
 
 export const onWheel = (e, slider, card) => {

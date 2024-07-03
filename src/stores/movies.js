@@ -9,8 +9,8 @@ export const useMoviesStore = defineStore('movies', () => {
   const movieDetails = ref({})
   const genres = ref([])
 
-  async function getMovies(sortBy) {
-    const url = new URL(`${API_BASE_URL}movie/${sortBy}`);
+  async function getMovies(type) {
+    const url = new URL(`${API_BASE_URL}movie/${type}`);
 
     url.search = new URLSearchParams({
       page: currentPage.value
@@ -29,6 +29,21 @@ export const useMoviesStore = defineStore('movies', () => {
     movies.value = data.results;
   }
 
+  async function getMovieLists(id) {
+    const url = new URL(`${API_BASE_URL}movie/${id}/lists`);
+    //   const url = new URL(`${API_BASE_URL}list/8303535`); get lists top 10 amazon
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: API_BEARER_KEY
+      }
+    };
+
+    const response = await fetch(url, options);
+    const data = await response.json();
+    return data.results
+  }
   async function getMovieDetails(id) {
     const url = new URL(`${API_BASE_URL}movie/${id}`);
 
@@ -59,10 +74,9 @@ export const useMoviesStore = defineStore('movies', () => {
     const response = await fetch(url, options);
     const data = await response.json();
     genres.value = data.genres
-    console.log(data);
-
   }
 
 
-  return { getMovies, movies, movieDetails, getMovieDetails, getGenres, genres }
+
+  return { getMovies, movies, movieDetails, getMovieDetails, getGenres, genres, getMovieLists }
 })
