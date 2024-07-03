@@ -43,10 +43,29 @@ function getNextPageMovies() {
 .itemWrapper {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 20px;
 }
 .item {
   max-width: calc((100% - 60px) / 4);
   cursor: pointer;
+}
+
+@media screen and (max-width: 1080px) {
+  .item {
+    max-width: calc((100% - 40px) / 3);
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .item {
+    max-width: calc((100% - 20px) / 2);
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .item {
+    max-width: calc((100% - 20px) / 1);
+  }
 }
 </style>
