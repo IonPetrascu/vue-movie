@@ -15,17 +15,17 @@ watch(
   () => route.params.type,
   (newType, oldType) => {
     if (newType !== oldType) {
-      moviesStore.getMovies(newType, currentPage.value)
+      moviesStore.getMovies(newType)
     }
   }
 )
 onMounted(() => {
-  moviesStore.getMovies(type, currentPage.value)
+  moviesStore.getMovies(type)
 })
 
-function getNextPage() {
+function getNextPageMovies() {
   currentPage.value += 1
-  moviesStore.getMovies(type, currentPage.value)
+  moviesStore.getMoviesFromNextPage(type, currentPage.value)
 }
 </script>
 <template>
@@ -35,7 +35,7 @@ function getNextPage() {
         <BaseCardItem :item="item" />
       </div>
     </ul>
-    <button @click="getNextPage">next page</button>
+    <button @click="getNextPageMovies">next page</button>
   </div>
 </template>
 

@@ -9,7 +9,23 @@ export const useMoviesStore = defineStore('movies', () => {
   const movieDetails = ref({})
   const genres = ref([])
 
-  async function getMovies(type, page) {
+  async function getMovies(type) {
+    const url = new URL(`${API_BASE_URL}movie/${type}`);
+
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: API_BEARER_KEY
+      }
+    };
+
+    const response = await fetch(url, options);
+    const data = await response.json();
+    movies.value = data.results
+  }
+
+  async function getMoviesFromNextPage(type, page) {
     const url = new URL(`${API_BASE_URL}movie/${type}`);
 
     url.search = new URLSearchParams({
@@ -78,5 +94,5 @@ export const useMoviesStore = defineStore('movies', () => {
 
 
 
-  return { getMovies, movies, movieDetails, getMovieDetails, getGenres, genres, getMovieLists }
+  return { getMovies, movies, movieDetails, getMovieDetails, getGenres, genres, getMovieLists, getMoviesFromNextPage }
 })

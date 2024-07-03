@@ -19,7 +19,7 @@ const slider = ref(null)
 const moviesStore = useMoviesStore()
 const movies = computed(() => moviesStore.movies)
 
-onMounted(() => moviesStore.getMovies(MOVIES_TYPES.POPULAR, 1))
+onMounted(() => moviesStore.getMovies(MOVIES_TYPES.POPULAR))
 
 const emit = defineEmits(['changePoster'])
 
