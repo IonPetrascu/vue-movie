@@ -12,7 +12,7 @@ export const ROUTER_PATH = {
     name: "movies"
   },
   TV: {
-    path: "/tv",
+    path: "/tv/:type",
     name: "tv"
   },
   TV_SINGLE: {
@@ -44,7 +44,7 @@ export const ROUTES_SUBPAGES = {
   tv: [
     { type: 'popular', name: "Popular" },
     { type: 'airing_today', name: "Airing Today" },
-    { type: 'on_tv', name: "On TV" },
+    { type: 'on_the_air', name: "On The Air" },
     { type: 'top_rated', name: "Top Rated" }
   ]
 };
