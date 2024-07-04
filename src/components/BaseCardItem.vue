@@ -1,6 +1,8 @@
 <script setup>
 import { ROUTER_PATH } from '@/utils/router'
 import { ref, inject } from 'vue'
+import { isTypeValid } from '@/utils/validators'
+
 const isFocused = ref(false)
 
 const props = defineProps({
@@ -12,7 +14,7 @@ const props = defineProps({
   type: {
     type: String,
     required: true,
-    validator: (value) => ['movies', 'tv'].includes(value)
+    validator: isTypeValid
   }
 })
 
