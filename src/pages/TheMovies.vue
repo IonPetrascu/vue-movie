@@ -9,7 +9,6 @@ const movies = computed(() => moviesStore.movies)
 const route = useRoute()
 const type = route.params.type
 const currentPage = ref(1)
-console.log(type)
 
 watch(
   () => route.params.type,
@@ -32,7 +31,7 @@ function getNextPageMovies() {
   <div :class="$style.page">
     <ul :class="$style.itemWrapper">
       <div :class="$style.item" :key="item.id" v-for="item in movies">
-        <BaseCardItem :item="item" />
+        <BaseCardItem type="movies" :item="item" />
       </div>
     </ul>
     <button :class="$style.btn" @click="getNextPageMovies">Load more</button>

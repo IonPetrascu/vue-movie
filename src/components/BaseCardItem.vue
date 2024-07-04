@@ -3,18 +3,32 @@ import { ROUTER_PATH } from '@/utils/router'
 import { ref, inject } from 'vue'
 const isFocused = ref(false)
 
-defineProps({
+const props = defineProps({
   item: {
     required: true,
     type: Object
     //validator:
+  },
+  type: {
+    type: String,
+    required: true,
+    validator: (value) => ['movies', 'tv'].includes(value)
   }
 })
+
 const goToPage = inject('goToPage')
+
+function checkTypeOnChangePage() {
+  console.log(props.type)
+  props.type === 'movies'
+    ? goToPage(ROUTER_PATH.MOVIE_SINGLE.name, props.item.id)
+    : goToPage(ROUTER_PATH.TV_SINGLE.name, props.item.id)
+}
+console.log(props.type)
 </script>
 <template>
   <div
-    @click="() => goToPage(ROUTER_PATH.MOVIE_SINGLE.name, item.id)"
+    @click="checkTypeOnChangePage"
     @mouseover="isFocused = true"
     @mouseleave="isFocused = false"
     :class="$style.body"
@@ -31,7 +45,7 @@ const goToPage = inject('goToPage')
       </div>
     </div>
   </div>
-  <div :class="$style.title">{{ item.title }}</div>
+  <div :class="$style.title">{{ item.title || item.original_name }}</div>
 </template>
 <style module>
 .body {

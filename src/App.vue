@@ -10,7 +10,6 @@ const router = useRouter()
 onMounted(moviesStore.getGenres)
 
 function goToPage(namePage, params) {
-  console.log(namePage, params)
   router.push({ name: namePage, params: { id: params } })
 }
 
