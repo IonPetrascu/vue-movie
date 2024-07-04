@@ -29,17 +29,20 @@ function getNextPageMovies() {
 }
 </script>
 <template>
-  <div>
+  <div :class="$style.page">
     <ul :class="$style.itemWrapper">
       <div :class="$style.item" :key="item.id" v-for="item in movies">
         <BaseCardItem :item="item" />
       </div>
     </ul>
-    <button @click="getNextPageMovies">next page</button>
+    <button :class="$style.btn" @click="getNextPageMovies">Load more</button>
   </div>
 </template>
 
 <style module>
+.page {
+  padding-bottom: 40px;
+}
 .itemWrapper {
   display: flex;
   flex-wrap: wrap;
@@ -51,6 +54,21 @@ function getNextPageMovies() {
   cursor: pointer;
 }
 
+.btn {
+  border: none;
+  font-size: 20px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+  background-color: #e63946;
+  color: white;
+  transition: all 0.3 ease-in-out;
+}
+.btn:hover {
+  scale: 1.05;
+}
 @media screen and (max-width: 1080px) {
   .item {
     max-width: calc((100% - 40px) / 3);
