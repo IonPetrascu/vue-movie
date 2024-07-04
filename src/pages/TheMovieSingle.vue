@@ -1,21 +1,16 @@
 <script setup>
 import { useMoviesStore } from '@/stores/movies'
-import { onMounted, computed, ref } from 'vue'
+import { onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
 const id = route.params.id
 const moviesStore = useMoviesStore()
 const movieDetails = computed(() => moviesStore.movieDetails)
-const movieList = ref({})
 
 onMounted(async () => {
   await moviesStore.getMovieDetails(id)
-  movieList.value = await moviesStore.getMovieLists(id)
-  console.log(movieList.value)
 })
-
-console.log(movieDetails)
 </script>
 
 <template>
