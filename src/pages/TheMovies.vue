@@ -31,7 +31,7 @@ function getNextPageMovies() {
   <div :class="$style.page">
     <ul :class="$style.itemWrapper">
       <div :class="$style.item" :key="item.id" v-for="item in movies">
-        <BaseCardItem type="movies" :item="item" />
+        <BaseCardItem type="movie" :item="item" />
       </div>
     </ul>
     <button :class="$style.btn" @click="getNextPageMovies">Load more</button>
@@ -61,7 +61,7 @@ function getNextPageMovies() {
   display: block;
   margin: 0 auto;
   cursor: pointer;
-  background-color: #e63946;
+  background-color: var(--red);
   color: white;
   transition: all 0.3 ease-in-out;
 }

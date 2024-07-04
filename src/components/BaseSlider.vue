@@ -40,7 +40,7 @@ const handleWheel = (e) => {
       v-for="(item, idx) in movies"
       :key="item.id"
     >
-      <BaseCardItem type="movies" :item="item" />
+      <BaseCardItem type="movie" :item="item" />
     </div>
   </div>
 </template>

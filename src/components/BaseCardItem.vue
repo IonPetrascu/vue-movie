@@ -22,7 +22,7 @@ const goToPage = inject('goToPage')
 
 function checkTypeOnChangePage() {
   console.log(props.type)
-  props.type === 'movies'
+  props.type === 'movie'
     ? goToPage(ROUTER_PATH.MOVIE_SINGLE.name, props.item.id)
     : goToPage(ROUTER_PATH.TV_SINGLE.name, props.item.id)
 }
@@ -54,6 +54,7 @@ console.log(props.type)
   height: 80%;
   display: flex;
   position: relative;
+  cursor: pointer;
 }
 .infoWrapper {
   position: absolute;

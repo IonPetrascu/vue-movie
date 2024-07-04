@@ -68,7 +68,7 @@ const goToPage = inject('goToPage')
     </div>
     <div :class="$style.wrapperSlider">
       <BaseSlider
-        type="movies"
+        type="movie"
         :sort-by="MOVIES_TYPES.POPULAR"
         @change-poster="changePoster"
         :movies="movies"
