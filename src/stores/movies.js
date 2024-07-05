@@ -60,6 +60,7 @@ export const useMoviesStore = defineStore('movies', () => {
     const data = await response.json();
     return data.results
   }
+
   async function getMovieDetails(id) {
     const url = new URL(`${API_BASE_URL}movie/${id}`);
 
@@ -74,6 +75,26 @@ export const useMoviesStore = defineStore('movies', () => {
     const response = await fetch(url, options);
     const data = await response.json();
     movieDetails.value = data
+  }
+
+  async function getMovieByParams({ endpoint, query = {} }) {
+    const url = new URL(`${API_BASE_URL}/${endpoint}`);
+
+    Object.keys(query).forEach(key => {
+      url.searchParams.append(key, query[key]);
+    });
+
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: API_BEARER_KEY
+      }
+    };
+
+    const response = await fetch(url, options);
+    const data = await response.json();
+    return data.results
   }
 
   async function getGenres() {
@@ -94,5 +115,15 @@ export const useMoviesStore = defineStore('movies', () => {
 
 
 
-  return { getMovies, movies, movieDetails, getMovieDetails, getGenres, genres, getMovieLists, getMoviesFromNextPage }
+  return {
+    genres,
+    movies,
+    movieDetails,
+    getMovies,
+    getMovieDetails,
+    getGenres,
+    getMovieLists,
+    getMoviesFromNextPage,
+    getMovieByParams
+  }
 })
